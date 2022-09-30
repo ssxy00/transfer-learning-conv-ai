@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+# @Time        : 2022/9/27 16:40
+# @Author      : ssxy00
+# @File        : train_without_persona.py
+# @Description : for dailydialog and multiwoz
+
+
 # Copyright (c) 2019-present, HuggingFace Inc.
 # All rights reserved. This source code is licensed under the BSD-style license found in the LICENSE file in the root directory of this source tree.
 import os
@@ -51,14 +58,17 @@ def add_special_tokens_(tokenizer):
     orig_num_tokens = len(tokenizer.encoder)
     num_added_tokens = tokenizer.add_special_tokens(ATTR_TO_SPECIAL_TOKEN) # doesn't add if they are already there
 
-def build_input_from_segments(persona, history, reply, tokenizer, lm_labels=False, with_eos=True):
-    """ Build a sequence of input from 3 segments: persona, history and last reply. """
+def build_input_from_segments(history, reply, tokenizer, lm_labels=False, with_eos=True):
+    """ Build a sequence of input from 2 segments: history and last reply. """
+    # input_ids: [bos] [speaker?] s1 ... [speaker1] s_t [eos]
+    # type_ids:  [speaker?] ...      ... [speaker1] ...
     bos, eos, speaker1, speaker2 = tokenizer.convert_tokens_to_ids(SPECIAL_TOKENS[:-2])
-    sequence = [[bos] + list(chain(*persona))] + history + [reply + ([eos] if with_eos else [])]
-    sequence = [sequence[0]] + [[speaker2 if (len(sequence)-i) % 2 else speaker1] + s for i, s in enumerate(sequence[1:])]
+    sequence = history + [reply + ([eos] if with_eos else [])]
+    sequence = [[speaker1 if (len(sequence)-i) % 2 else speaker2] + s for i, s in enumerate(sequence)]
+    sequence = [[bos] + sequence[0]] + sequence[1:]
     instance = {}
     instance["input_ids"] = list(chain(*sequence))
-    instance["token_type_ids"] = [speaker1 for _ in sequence[0]] + [speaker2 if (len(sequence) - i) % 2 else speaker1 for i, s in enumerate(sequence[1:]) for _ in s]
+    instance["token_type_ids"] = [speaker1 if (len(sequence) - i) % 2 else speaker2 for i, s in enumerate(sequence) for _ in s]
     instance["mc_token_ids"] = len(instance["input_ids"]) - 1
     instance["lm_labels"] = [-100] * len(instance["input_ids"])
     if lm_labels:
@@ -68,28 +78,25 @@ def build_input_from_segments(persona, history, reply, tokenizer, lm_labels=Fals
 
 def get_data_loaders(args, tokenizer):
     """ Prepare the dataset for training and evaluation """
-    personachat = get_dataset(tokenizer, args.dataset_path, args.dataset_cache)
+    raw_dataset = get_dataset(tokenizer, args.dataset_path, args.dataset_cache)
 
     logger.info("Build inputs and labels")
     datasets = {"train": defaultdict(list), "valid": defaultdict(list)}
-    for dataset_name, dataset in personachat.items():
+    for dataset_name, dataset in raw_dataset.items():
         num_candidates = len(dataset[0]["utterances"][0]["candidates"])
         # if args.num_candidates > 0 and dataset_name == 'train':
         if args.num_candidates > 0:
             num_candidates = min(args.num_candidates, num_candidates)
         for dialog in dataset:
-            persona = dialog["personality"].copy()
-            for _ in range(args.personality_permutations):
-                for utterance in dialog["utterances"]:
-                    history = utterance["history"][-(2*args.max_history+1):]
-                    for j, candidate in enumerate(utterance["candidates"][-num_candidates:]):
-                        lm_labels = bool(j == num_candidates-1)
-                        instance = build_input_from_segments(persona, history, candidate, tokenizer, lm_labels)
-                        for input_name, input_array in instance.items():
-                            datasets[dataset_name][input_name].append(input_array)
-                    datasets[dataset_name]["mc_labels"].append(num_candidates - 1)
-                    datasets[dataset_name]["n_candidates"] = num_candidates
-                persona = [persona[-1]] + persona[:-1]  # permuted personalities
+            for utterance in dialog["utterances"]:
+                history = utterance["history"][-(2*args.max_history+1):]
+                for j, candidate in enumerate(utterance["candidates"][-num_candidates:]):
+                    lm_labels = bool(j == num_candidates-1)
+                    instance = build_input_from_segments(history, candidate, tokenizer, lm_labels)
+                    for input_name, input_array in instance.items():
+                        datasets[dataset_name][input_name].append(input_array)
+                datasets[dataset_name]["mc_labels"].append(num_candidates - 1)
+                datasets[dataset_name]["n_candidates"] = num_candidates
 
     logger.info("Pad inputs and convert to Tensor")
     tensor_datasets = {"train": [], "valid": []}
@@ -117,9 +124,9 @@ def train():
     parser = ArgumentParser()
     parser.add_argument("--gpt2_vocab_dir", default="/home1/sxy/models/transformers3_gpt2-small",
                         help="path to GPT2 tokenizer vocab file")
-    parser.add_argument("--dataset_path", type=str, default="/home1/sxy/transfer-learning-conv-ai/datasets/personachat/personachat.json", help="Path or url of the dataset. If empty download from S3.")
-    parser.add_argument("--dataset_cache", type=str, default='/home1/sxy/transfer-learning-conv-ai/datasets/personachat/personachat.cache', help="Path or url of the dataset cache")
-    parser.add_argument("--save_dir", type=str, default="/home1/sxy/transfer-learning-conv-ai/runs", help="Path to save checkpoint and logs")
+    parser.add_argument("--dataset_path", type=str, default="/home1/sxy/transfer-learning-conv-ai/datasets/dailydialog/dailydialog.json", help="Path or url of the dataset. If empty download from S3.")
+    parser.add_argument("--dataset_cache", type=str, default='/home1/sxy/transfer-learning-conv-ai/datasets/dailydialog/dailydialog.cache', help="Path or url of the dataset cache")
+    parser.add_argument("--save_dir", type=str, default="/home1/sxy/transfer-learning-conv-ai/runs/tmp", help="Path to save checkpoint and logs")
     parser.add_argument("--num_candidates", type=int, default=2, help="Number of candidates for training")
     parser.add_argument("--max_history", type=int, default=2, help="Number of previous exchanges to keep in history")
     parser.add_argument("--train_batch_size", type=int, default=4, help="Batch size for training")
@@ -130,7 +137,6 @@ def train():
     parser.add_argument("--mc_coef", type=float, default=1.0, help="Multiple-choice loss coefficient")
     parser.add_argument("--max_norm", type=float, default=1.0, help="Clipping gradient norm")
     parser.add_argument("--n_epochs", type=int, default=3, help="Number of training epochs")
-    parser.add_argument("--personality_permutations", type=int, default=1, help="Number of permutations of personality sentences")
     parser.add_argument("--eval_before_start", action='store_true', help="If true start with a first evaluation before training")
     parser.add_argument("--device", type=str, default="cuda" if torch.cuda.is_available() else "cpu", help="Device (cuda or cpu)")
     parser.add_argument("--fp16", type=str, default="", help="Set to O0, O1, O2 or O3 for fp16 training (see apex documentation)")
@@ -272,3 +278,4 @@ def train():
 
 if __name__ == "__main__":
     train()
+
