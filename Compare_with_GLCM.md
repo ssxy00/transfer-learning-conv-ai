@@ -14,26 +14,26 @@ python -m pip install pytorch-ignite
 ```
 
 TODO:
-+ test (personachat 上的 evaluate 已经写好了，dailydialog 和 multiwoz 需要做一些修改)
-+ dailydialog (已经造了数据，训练的部分已经修改好了，正在训练 1e-4)
-+ multiwoz (已经造了数据，训练的部分已经修改好了，正在训练 1e-4)
++ test (personachat 上的 evaluate 已经写好了)
++ dailydialog (已经造了数据，训练的部分已经修改好了，正在重新训练 1e-4 因为之前跑的 ckpt 没有存下来，测试部分已经改好还没 debug)
++ multiwoz (已经造了数据，训练的部分已经修改好了，准备训练 1e-4)
 
 ## Exp
 ### PersonaChat
+lr=1e-4
+总共训练了 12 个 epochs，在 7 epochs ppl 达到最低：
+Validation: {'accuracy': 0.7769, 'nll': 3.7763, 'ppl': 43.6525},
+此时 accuracy 不是最高，最高在 8 epochs accuracy: 0.7988，但是考虑到我们是要做生成任务，还是选择 ckpt with lowest valid ppl
+
+Test:
+loss: 3.7859, ppl: 44.0732, bleu: 8.11, meteor: 11.10, nist: 44.38, rougeL: 15.19
 
 
 ### DailyDialog
-lr=8e-5
-总共训练了 66 个 epoch，在 48 epochs ppl 达到最低：
-Validation: {'accuracy': 0.6217, 'nll': 3.6939, 'ppl': 40.2011},
-此时 accuracy 不是最高，最高在 63 epochs accuracy: 0.6313，但是考虑到我们是要做生成任务，还是选择 ckpt with lowest valid ppl
 lr=1e-4
-总共训练了 56 个 epochs，在 45 epochs ppl 达到最低：
-Validation: {'accuracy': 0.6246, 'nll': 3.6900, 'ppl': 40.0451},
-此时 accuracy 不是最高，最高在 54 epochs accuracy: 0.6337，但是考虑到我们是要做生成任务，还是选择 ckpt with lowest valid ppl
+总共训练了  个 epochs，在  epochs ppl 达到最低：
+Validation: {'accuracy': , 'nll': , 'ppl': },
+此时 accuracy 不是最高，最高在  epochs accuracy: ，但是考虑到我们是要做生成任务，还是选择 ckpt with lowest valid ppl
 
 ### MultiWOZ
 lr=1e-4
-总共训练了 37 个 epochs，在 25 epochs ppl 达到最低：
-Validation: {'accuracy': 0.8918, 'nll': 1.7458, 'ppl': 5.7303},
-此时 accuracy 不是最高，最高在 18 epochs accuracy: 0.8930，但是考虑到我们是要做生成任务，还是选择 ckpt with lowest valid ppl
