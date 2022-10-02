@@ -14,9 +14,9 @@ python -m pip install pytorch-ignite
 ```
 
 TODO:
-+ test (personachat 上的 evaluate 已经写好了)
-+ dailydialog (已经造了数据，训练的部分已经修改好了，正在重新训练 1e-4 因为之前跑的 ckpt 没有存下来，测试部分已经改好还没 debug)
-+ multiwoz (已经造了数据，训练的部分已经修改好了，准备训练 1e-4)
++ test (已经完成 lr=1e-4 的实验，之后可以再补其他 lr)
++ dailydialog (正在重新训练 1e-4 因为之前跑的 ckpt 没有存下来，测试部分已经完成 debug)
++ multiwoz (准备训练 1e-4)
 
 ## Exp
 ### PersonaChat
