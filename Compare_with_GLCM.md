@@ -51,3 +51,6 @@ lr=1e-4
 总共训练了 31 个 epochs，在 25 epochs ppl 达到最低：
 Validation: {'accuracy': 0.8849, 'nll': 1.7309, 'ppl': 5.6459},
 此时 accuracy 不是最高，最高在 16 epochs accuracy: 0.8910，但是考虑到我们是要做生成任务，还是选择 ckpt with lowest valid ppl
+
+Test:
+loss: 1.6772, ppl: 5.3507, bleu: 10.03, meteor: 16.81, nist: 47.10, rougeL: 19.48
