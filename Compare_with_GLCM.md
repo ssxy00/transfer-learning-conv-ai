@@ -33,6 +33,10 @@ lr=8e-5
 Validation: {'accuracy': 0.7167, 'nll': 3.7837, 'ppl': 43.9765},
 此时 accuracy 不是最高，最高在 11 epochs accuracy: 0.7716，但是考虑到我们是要做生成任务，还是选择 ckpt with lowest valid ppl
 
+lr=3e-4
+总共训练了 10 个 epochs，在 7 epochs ppl 达到最低：
+Validation: {'accuracy': 0.7515, 'nll': 3.8322, 46.1655},
+此时 accuracy 不是最高，最高在 10 epochs accuracy: 0.7725，但是考虑到我们是要做生成任务，还是选择 ckpt with lowest valid ppl
 
 ### DailyDialog
 lr=1e-4
@@ -45,6 +49,15 @@ Validation: {'accuracy': 0.6255, 'nll': 3.6395, 'ppl': 38.0739},
 Test:
 loss: 3.5975, ppl: 36.5051, bleu: 6.89, meteor: 11.73, nist: 27.42, rougeL: 17.11
 
+lr=8e-5
+总共训练了 62 个 epochs，在 51 epochs ppl 达到最低：
+Validation: {'accuracy': 0.6351, 'nll': 3.7073, 'ppl': 40.7432},
+此时 accuracy 不是最高，最高在 42 epochs accuracy: 0.6404，但是考虑到我们是要做生成任务，还是选择 ckpt with lowest valid ppl
+
+lr=3e-4
+总共训练了 41 个 epochs，在 39 epochs ppl 达到最低：
+Validation: {'accuracy': 0.6260, 'nll': 3.6683, 'ppl': 39.1864},
+此时 accuracy 不是最高，最高在 38 epochs accuracy: 0.6361，但是考虑到我们是要做生成任务，还是选择 ckpt with lowest valid ppl
 
 ### MultiWOZ
 lr=1e-4
@@ -54,3 +67,13 @@ Validation: {'accuracy': 0.8849, 'nll': 1.7309, 'ppl': 5.6459},
 
 Test:
 loss: 1.6772, ppl: 5.3507, bleu: 10.03, meteor: 16.81, nist: 47.10, rougeL: 19.48
+
+lr=8e-5
+总共训练了 100 个 epochs，在 27 epochs ppl 达到最低：
+Validation: {'accuracy': 0.8807, 'nll': 1.7348, 'ppl': 5.6676},
+此时 accuracy 不是最高，最高在 19 epochs accuracy: 0.8910，但是考虑到我们是要做生成任务，还是选择 ckpt with lowest valid ppl
+
+lr=3e-4
+总共训练了 100 个 epochs，在 21 epochs ppl 达到最低：
+Validation: {'accuracy': 0.8846, 'nll': 1.7314, 'ppl': 5.6486},
+此时 accuracy 不是最高，最高在 85 epochs accuracy: 0.8952，但是考虑到我们是要做生成任务，还是选择 ckpt with lowest valid ppl
