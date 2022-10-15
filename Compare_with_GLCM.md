@@ -13,11 +13,6 @@ python -m spacy download en
 python -m pip install pytorch-ignite
 ```
 
-TODO:
-+ test (已经完成 lr=1e-4 的实验，之后可以再补其他 lr)
-+ dailydialog (已经完成 lr=1e-4 的实验，之后可以再补其他 lr)
-+ multiwoz (正在重新训练 1e-4)
-
 ## Exp
 ### PersonaChat
 lr=1e-4
