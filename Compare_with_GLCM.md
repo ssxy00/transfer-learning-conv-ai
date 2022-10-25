@@ -72,3 +72,62 @@ lr=3e-4
 总共训练了 100 个 epochs，在 21 epochs ppl 达到最低：
 Validation: {'accuracy': 0.8846, 'nll': 1.7314, 'ppl': 5.6486},
 此时 accuracy 不是最高，最高在 85 epochs accuracy: 0.8952，但是考虑到我们是要做生成任务，还是选择 ckpt with lowest valid ppl
+
+### PersonaChat without mc
+lr=8e-5
+总共训练了 5 个 epochs，在 2 epochs ppl 达到最低：
+Validation: {'nll': 3.7211, 'ppl': 41.3093}
+
+lr=1e-4
+总共训练了 11 个 epochs，在 2 epochs ppl 达到最低：
+Validation: {'nll': 3.7163, 'ppl': 41.1120}
+
+Test:
+checkpoint_mymodel_34434.pt
+loss: 3.7076, ppl: 40.7578, bleu: 8.19, meteor: 11.25, nist: 45.08, rougeL: 15.30
+
+
+lr=3e-4
+总共训练了 3 个 epochs，在 1 epochs ppl 达到最低：
+Validation: {'nll': 3.7329, 'ppl': 41.7995}
+
+
+### Dailydialog without mc
+lr=8e-5
+总共训练了 15 个 epochs，在 13 epochs ppl 达到最低：
+Validation: {'nll': 3.7930, 'ppl': 44.3878}
+
+lr=1e-4
+总共训练了 79 个 epochs，在 12 epochs ppl 达到最低：
+Validation: {'nll': 3.7680, 'ppl': 43.2915}
+
+lr=3e-4
+总共训练了 15 个 epochs，在 7 epochs ppl 达到最低：
+Validation: {'nll': 3.6424, 'ppl': 38.1839}
+
+Test:
+checkpoint_mymodel_19523.pt
+loss: 3.4608, ppl: 31.8431, bleu: 7.11, meteor: 11.76, nist: 30.33, rougeL: 16.44
+
+lr=5e-4
+总共训练了 11 个 epochs，在 6 epochs ppl 达到最低：
+Validation: {'nll': 3.6480, 'ppl': 38.3970}
+
+### MultiWOZ without mc
+lr=1e-4
+总共训练了 53 个 epochs，在 10 epochs ppl 达到最低：
+Validation: {'nll': 1.7036, 'ppl': 5.4935}
+
+lr=3e-4
+总共训练了 13 个 epochs，在 6 epochs ppl 达到最低：
+Validation: {'nll': 1.6941, 'ppl': 5.4415}
+
+Test:
+checkpoint_mymodel_21870.pt
+loss: 1.6401, ppl: 5.1558, bleu: 10.5040, meteor: 17.7016, nist: 51.8052, rougeL: 19.9565
+
+lr=5e-4
+总共训练了 10 个 epochs，在 7 epochs ppl 达到最低：
+Validation: {'nll': 1.7017, 'ppl': 5.4833}
+
+
