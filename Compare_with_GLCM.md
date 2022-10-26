@@ -73,6 +73,8 @@ lr=3e-4
 Validation: {'accuracy': 0.8846, 'nll': 1.7314, 'ppl': 5.6486},
 此时 accuracy 不是最高，最高在 85 epochs accuracy: 0.8952，但是考虑到我们是要做生成任务，还是选择 ckpt with lowest valid ppl
 
+## without mc
+去掉 multitask
 ### PersonaChat without mc
 lr=8e-5
 总共训练了 5 个 epochs，在 2 epochs ppl 达到最低：
@@ -131,3 +133,62 @@ lr=5e-4
 Validation: {'nll': 1.7017, 'ppl': 5.4833}
 
 
+## without mc without type
+进一步去掉 token_type_ids，并且输入 input_ids 也改成和 dialogpt 一样的形式 x1 eos y1 eos ...
+对于 personachat，也把 persona permutation 去掉
+TODO: 三个数据集的 evaluation 都还没改
+
+### Personachat without mc without type
+lr=8e-5
+总共训练了 6 个 epochs，在 4 epochs ppl 达到最低：
+Validation: {'nll': 3.7296, 'ppl': 41.6604}
+
+lr=1e-4
+总共训练了 6 个 epochs，在 4 epochs ppl 达到最低：
+Validation: {'nll': 3.6955, 'ppl': 40.2675}
+
+Test:
+checkpoint_mymodel_34436.pt
+loss: 3.6798, ppl: 39.6384, bleu: 7.90, meteor: 11.03, nist: 43.35, rougeL: 15.35
+
+lr=3e-4
+总共训练了 6 个 epochs，在 2 epochs ppl 达到最低：
+Validation: {'nll': 3.7023, 'ppl': 40.5405}
+
+### Dailydialog without mc without type
+lr=1e-4
+总共训练了 15 个 epochs，在 11 epochs ppl 达到最低：
+Validation: {'nll': 3.8291, 'ppl': 46.0192}
+
+lr=3e-4
+总共训练了 15 个 epochs，在 6 epochs ppl 达到最低：
+Validation: {'nll': 3.6550, 'ppl': 38.6661}
+
+lr=5e-4
+总共训练了 15 个 epochs，在 6 epochs ppl 达到最低：
+Validation: {'nll': 3.6411, 'ppl': 38.1327}
+
+Test:
+checkpoint_mymodel_16734.pt
+loss: 3.4537, ppl: 31.6169, bleu: 7.17, meteor: 11.25, nist: 29.96, rougeL: 15.70
+
+lr=8e-4
+总共训练了 15 个 epochs，在 6 epochs ppl 达到最低：
+Validation: {'nll': 3.6951, 'ppl': 40.2498}
+
+### Multiwoz without mc without type
+lr=1e-4
+总共训练了 12 个 epochs，在 10 epochs ppl 达到最低：
+Validation: {'nll': 1.7054, 'ppl': 5.5038}
+
+lr=3e-4
+总共训练了 11 个 epochs，在 7 epochs ppl 达到最低：
+Validaton: {'nll': 1.6987, 'ppl': 5.4669}
+
+Test:
+checkpoint_mymodel_25515.pt
+loss: 1.6419, ppl: 5.1650, bleu: 10.25, meteor: 17.32, nist: 49.73, rougeL: 19.70
+
+lr=5e-4
+总共训练了 12 个 epochs，在 7 epochs ppl 达到最低：
+Validation: {'nll': 1.7062, 'ppl': 5.5081}
