@@ -192,3 +192,71 @@ loss: 1.6419, ppl: 5.1650, bleu: 10.25, meteor: 17.32, nist: 49.73, rougeL: 19.7
 lr=5e-4
 总共训练了 12 个 epochs，在 7 epochs ppl 达到最低：
 Validation: {'nll': 1.7062, 'ppl': 5.5081}
+
+## without mc without type length limit (128)
+TODO evaluate 还没写
+
+### Personachat without mc without type length limit
+
+lr=1e-4
+total: 6, choose 4
+Validation: {'nll': 3.6458, 'ppl': 38.3129}
+
+lr=3e-4
+total: 6, choose 2
+Validation: {'nll': 3.6429, 'ppl': 38.2025}
+
+Test:
+checkpoint_mymodel_8610.pt
+loss: 3.6377, ppl: 38.0041, bleu: 8.12, meteor: 10.61, nist: 46.31, rougeL: 14.95
+
+lr=5e-4
+total: 3, choose 2
+Validation: {'nll': 3.6938, 'ppl': 40.1972}
+
+
+### DailyDialog without mc without type length limit
+lr=1e-4
+total 15, choose 12
+Validation: {'nll': 3.8030, 'ppl': 44.8364}
+
+lr=3e-4
+total: 15, choose 6
+Validation: {'nll': 3.6076, 'ppl': 36.8782}
+
+lr=5e-4
+total 15, choose 6
+Validation: {'nll': 3.5975, 'ppl': 36.5081}
+
+Test:
+checkpoint_mymodel_4188.pt
+loss: 3.3765, ppl: 29.2686, bleu: 7.10, meteor: 11.48, nist: 30.61, rougeL: 16.44
+
+lr=8e-4
+total 9, choose 7
+Validation: {'nll': 3.6791, 'ppl': 39.6108}
+
+
+### Multiwoz without mc without type length limit
+lr=1e-4
+total: 15, choose 9
+Validation: {'nll': 1.6577, 'ppl': 5.2473}
+
+lr=3e-4
+total: 15, choose 5
+Validation: {'nll': 1.6560, 'ppl': 5.2383}
+
+Test:
+checkpoint_mymodel_9115.pt
+loss: 1.6073, ppl: 4.9893, bleu: 11.33, meteor: 18.38, nist: 57.08, rougeL: 20.87
+
+
+lr=5e-4
+total: 15, choose 6
+Validation: {'nll': 1.6618, 5.2689}
+
+
+
+
+
+
