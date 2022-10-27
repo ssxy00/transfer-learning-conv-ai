@@ -194,7 +194,6 @@ lr=5e-4
 Validation: {'nll': 1.7062, 'ppl': 5.5081}
 
 ## without mc without type length limit (128)
-TODO evaluate 还没写
 
 ### Personachat without mc without type length limit
 
@@ -255,8 +254,39 @@ lr=5e-4
 total: 15, choose 6
 Validation: {'nll': 1.6618, 5.2689}
 
+## without mc without type length limit gpt2
+
+### PersonaChat without mc without type length limit gpt2
+| lr   | total | choose | nll    | ppl     |
+|------|-------|--------|--------|---------|
+| 8e-5 | 6     | 4      | 3.6879 | 39.9626 |
+| 1e-4 | 6     | 4      | 3.6786 | 39.5915 |
+| 3e-4 | 6     | 2      | 3.7137 | 41.0054 |
+ | 5e-4 | 6     | 3      | 3.8047 | 44.9122 |
+
+choose lr=1e-4, checkpoint_mymodel_17220.pt
+loss: 3.6648, ppl: 39.0479, bleu: 8.31, meteor: 10.76, nist: 47.37, rougeL: 14.63
 
 
+### DailyDialog without mc without type length limit gpt2
+| lr   | total | choose | nll    | ppl     |
+|------|-------|--------|--------|---------|
+| 1e-4 | 15    | 10     | 3.9739 | 53.1912 |
+| 3e-4 | 15    | 6      | 3.8572 | 47.3341 |
+| 5e-4 | 15    | 6      | 3.9633 | 52.6308 |
+| 8e-4 | 15    | 9      | 4.2389 | 69.3327 |
+
+choose lr=3e-4, checkpoint_mymodel_4188.pt
+loss: 3.6234, ppl: 37.4648, bleu: 7.47, meteor: 12.22, nist: 33.17, rougeL: 16.89
 
 
+### MultiWOZ without mc without type length limit gpt2
 
+| lr   | total | choose | nll    | ppl      |
+|------|-------|--------|--------|----------|
+| 1e-4 | 15    | 9      | 1.6652 | 5.2870   |
+| 3e-4 | 15    | 6      | 1.6599 | 5.2587   |
+| 5e-4 | 15    | 7      | 1.6683 | 5.3034   |
+
+choose lr=3e-4, checkpoint_mymodel_10938.pt
+loss: 1.6073, ppl: 4.9896, bleu: 10.85, meteor: 17.71, nist: 53.20, rougeL: 20.37
